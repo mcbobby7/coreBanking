@@ -1,19 +1,19 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 /** Translation Imports */
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { TranslateService, LangChangeEvent } from "@ngx-translate/core";
 
 /** Custom Services */
-import { Logger } from '../logger/logger.service';
+import { Logger } from "../logger/logger.service";
 
 /** Other Imports */
-import { includes } from 'lodash';
-import * as enUS from '../../../translations/en-US.json';
-import * as frFR from '../../../translations/fr-FR.json';
+import { includes } from "lodash";
+import * as enUS from "../../../translations/en-US.json";
+import * as frFR from "../../../translations/fr-FR.json";
 
 /** Initialize Logger */
-const log = new Logger('I18nService');
+const log = new Logger("I18nService");
 
 /**
  * Pass-through function to mark a string for translation extraction.
@@ -27,14 +27,13 @@ export function extract(s: string) {
 
 @Injectable()
 export class I18nService {
-
   /** Key to store current language of application in local storage. */
-  private languageStorageKey = 'mifosXLanguage';
+  private languageStorageKey = "mifosXLanguage";
 
   defaultLanguage: string;
   supportedLanguages: string[];
 
-  constructor(private translateService: TranslateService) { }
+  constructor(private translateService: TranslateService) {}
 
   /**
    * Initializes i18n for the application.
@@ -45,10 +44,11 @@ export class I18nService {
   init(defaultLanguage: string, supportedLanguages: string[]) {
     this.defaultLanguage = defaultLanguage;
     this.supportedLanguages = supportedLanguages;
-    this.language = '';
+    this.language = "";
 
-    this.translateService.onLangChange
-      .subscribe((event: LangChangeEvent) => { localStorage.setItem(this.languageStorageKey, event.lang); });
+    this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+      localStorage.setItem(this.languageStorageKey, event.lang);
+    });
   }
 
   /**
@@ -58,13 +58,14 @@ export class I18nService {
    * @param {string} language The IETF language code to set.
    */
   set language(language: string) {
-    language = language || localStorage.getItem(this.languageStorageKey) || this.translateService.getBrowserCultureLang();
+    language =
+      language || localStorage.getItem(this.languageStorageKey) || this.translateService.getBrowserCultureLang();
     let isSupportedLanguage = includes(this.supportedLanguages, language);
 
     // If no exact match is found, search without the region
     if (language && !isSupportedLanguage) {
-      language = language.split('-')[0];
-      language = this.supportedLanguages.find(supportedLanguage => supportedLanguage.startsWith(language)) || '';
+      language = language.split("-")[0];
+      language = this.supportedLanguages.find((supportedLanguage) => supportedLanguage.startsWith(language)) || "";
       isSupportedLanguage = Boolean(language);
     }
 
@@ -85,5 +86,4 @@ export class I18nService {
   get language(): string {
     return this.translateService.currentLang;
   }
-
 }

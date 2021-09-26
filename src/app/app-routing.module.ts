@@ -1,18 +1,18 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
 // Not Found Component
-import {NotFoundComponent} from './not-found/not-found.component';
+import { NotFoundComponent } from "./not-found/not-found.component";
 
 /**
  * Fallback to this route when no prior route is matched.
  */
 const routes: Routes = [
   {
-    path: '**',
-    component: NotFoundComponent
-  }
+    path: "**",
+    component: NotFoundComponent,
+  },
 ];
 
 /**
@@ -23,6 +23,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
